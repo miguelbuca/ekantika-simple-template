@@ -4,8 +4,7 @@ import Props from './type'
 import { useState, useRef } from 'react'
 
 import {
-    CaretDownOutlined,
-    CloseOutlined
+    CheckOutlined
 } from '@ant-design/icons';
 
 import styled from 'styled-components'
@@ -46,8 +45,40 @@ const Check = styled.div`
 `
 
 const Circle = styled.div`
-    
+    display: flex;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    border: solid 1px rgba(0,0,0,.2);
+    cursor: pointer;
+
+    &>input[type='checkbox']:checked ~ div{
+        background-color: ${({ theme }) => theme?.colors?.primary} !important;
+        transform: rotate(0deg);
+
+        &>*{
+            color: ${({ theme }) => theme?.colors?.defualtFont} !important;
+        }
+    }
 `
+
+const CheckIcon = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin: .1rem;
+    border-radius: 50%;
+    background-color: transparent !important;
+    transition: all .2s;
+    transform: rotate(90deg);
+
+    &>*{
+        color: transparent;
+        font-size: 8pt !important;
+    }
+`
+
 
 const Switch: NextPage<Props> = ({ onChecked, shape, ...props }: Props) => {
 
@@ -66,7 +97,17 @@ const Switch: NextPage<Props> = ({ onChecked, shape, ...props }: Props) => {
             </Check>
         </Container>
     ) : (
-            <Circle>{ shape }</Circle>
+            <Circle
+                onClick={() => {
+                    ref.current?.click()
+                    setChecked(!checked)
+                }}
+            >
+                <input ref={ref} type="checkbox" {...props} hidden />
+                <CheckIcon>
+                    <CheckOutlined/>
+                </CheckIcon>
+            </Circle>
     )
 }
 export default Switch
