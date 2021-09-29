@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
-import Table from '../src/components/layout/table'
+import Table from '../components/layout/table'
 import axios from 'axios'
 
 const Home: NextPage = () => {
