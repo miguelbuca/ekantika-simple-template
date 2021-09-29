@@ -1,5 +1,7 @@
 import type { NextPage } from 'next'
 
+import Props from './type'
+
 import styled from 'styled-components'
 import Button from '../button'
 import Input from '../input'
@@ -51,7 +53,7 @@ const LeftSide = styled.div`
 `
 
 
-const Table: NextPage = () => {
+const Table: NextPage<Props<Regions>> = ({ data }:Props<Regions>) => {
     return (
         <Container>
             <div>

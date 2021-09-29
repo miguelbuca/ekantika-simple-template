@@ -5,7 +5,7 @@ import axios from 'axios'
 
 const Home: NextPage = () => {
 
-  const [ regions, setRegions ] = useState<Regions[]>()
+  const [ regions, setRegions ] = useState<Regions[]>([])
 
   useEffect(() => {
     axios.get('https://hmg-dev-brf-backend.profitmais.com.br/region/list')
@@ -17,8 +17,9 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      { console.log(regions) }
-      <Table />
+      <Table
+        data={regions}
+      />
     </div>
   )
 }
