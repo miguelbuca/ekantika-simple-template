@@ -8,6 +8,6 @@ export default interface Props extends StyleHTMLAttributes<HTMLDivElement>{
     placeholder: string
     data: Item[],
     type: 'multiple' | 'single',
-    onSelectItem: (e: Item | Item[]) => void,
+    onSelectItem?: (e: Item | Item[]) => void,
     picture?: string,
 }

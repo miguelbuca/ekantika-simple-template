@@ -6,7 +6,8 @@ import {
     MessageOutlined,
     ShopOutlined,
     UserOutlined,
-    UsergroupAddOutlined
+    HeatMapOutlined,
+    UsergroupAddOutlined,
 } from '@ant-design/icons';
 
 import Link from 'next/link'
@@ -87,25 +88,25 @@ const Aside: NextPage<Porps> = ({ getRoute }:Porps) => {
 
     const [active, setActive] = useState<number>(0)
 
-    const menu: iRoute[] = [
+    const menu: Route[] = [
         {
             title: 'Home',
             path: '/',
             icon: <HomeOutlined />
         },
         {
-            title: 'Empresas',
-            path: '/clients',
+            title: 'Gestão de regiões',
+            path: '/regions',
             icon: <ShopOutlined/>
         },
         {
-            title: 'Gestão de clientes',
-            path: '/building',
+            title: 'Equipe',
+            path: '/equipe',
             icon: <UsergroupAddOutlined/>
         },
         {
             title: 'Usuários',
-            path: '/building',
+            path: '/users',
             icon: <UserOutlined/>
         },
         {

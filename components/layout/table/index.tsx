@@ -1,5 +1,7 @@
 import type { NextPage } from 'next'
 
+import { useEffect, useState } from 'react'
+
 import Props from './type'
 
 import styled from 'styled-components'
@@ -7,6 +9,15 @@ import Button from '../button'
 import Input from '../input'
 import Select from '../select'
 import Switch from '../switch'
+
+
+import {
+    LeftOutlined,
+    RightOutlined,
+    DeleteOutlined,
+    EditOutlined
+} from '@ant-design/icons';
+
 
 const Container = styled.div`
     display: flex;
@@ -52,8 +63,164 @@ const LeftSide = styled.div`
     }
 `
 
+const TableContainer = styled.table`
+    width: 100%;
+    font-size: 8pt !important;
+    border-collapse: collapse;
+    color: ${({ theme }) => theme?.colors?.primary} !important;
 
-const Table: NextPage<Props<Regions>> = ({ data }:Props<Regions>) => {
+    & thead{
+
+        & th{
+            text-transform: uppercase;
+            padding: .5rem;
+            min-height: 38px !important;
+            text-align: start !important;
+
+            &:first-child{
+                width: 50px !important;
+            }
+            &:last-child{
+                width: 100px;
+            }
+            
+            &:nth-child(2){
+                border-radius: 8px 0 0 8px;
+            }
+            &:last-child{
+                border-radius: 0 8px 8px 0;
+            }
+
+            &:not(:first-child){
+                background-color: ${({ theme }) => theme?.colors?.darTansparent} !important;
+            }
+        }
+    }
+    & tbody{
+        & td{
+            text-align: start !important;
+            padding: 1rem .5rem;
+            color: #5e5e5e;
+            font-size: 12pt !important;
+        }
+        & td:not(:first-child){
+            border-bottom: solid 1px ${({ theme }) => theme?.colors?.darTansparent} !important;
+        }
+
+        & tr[attr-border="none"] td{
+            border: none !important;
+        }
+    }
+`
+
+const Footer = styled.div`
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+
+    &>div{
+        display: flex;
+        flex-direction: row;
+
+        &:first-child{
+            flex: 1;
+        }
+    }
+`
+
+const Pag = styled.button`
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+    color: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition: all .3s;
+
+    &:not(:last-child){
+        margin-right: .5rem;
+    }
+`
+
+const ActionTable = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &>button{
+        border-radius: 50%;
+        border: none;
+        height: 30px;
+        width: 30px;
+        background-color: ${({ theme }) => theme?.colors?.darTansparent};
+        
+        &:not(:last-child){
+            margin-right: .5rem;
+        }
+
+        &:last-child{
+            color: red;
+        }
+    }
+`
+
+const Table: NextPage<Props<Regions>> = ({ data , limit, title }: Props<Regions>) => {
+    
+    const [collumn, setCollumn] = useState<string[]>()
+    
+    const [sData, setSData] = useState<Regions[][]>([])
+    
+    const [pag, setPag] = useState<number>(0)
+
+    useEffect(() => {
+        
+        if(!(data?.length>0))return
+
+        const cols = Object.keys(data[0])?.map(key => key)
+        
+        cols.push("status")
+
+        setCollumn(cols)
+
+    }, [data])
+
+    useEffect(() => {
+
+        let temp: Regions[] = [];
+
+        let _data: Regions[][] = [];
+
+        let pos: number = limit
+
+        let mode: Regions[] = [{
+            idRegion: '',
+            nameRegion: ''
+        },...data]
+        
+
+        mode.map((item, index) => {
+            
+            temp.push(item)
+
+            if (((index % pos) == 0)) {
+                if (index !== 0) _data.push(temp)
+                temp = []
+            } else if(data.length-limit*_data.length<limit) {
+                if (index === data.length-1) {
+                    _data.push(temp)
+                } 
+            }
+        })
+
+        setSData(_data)
+        
+    }, [data, limit])
+    
+
     return (
         <Container>
             <div>
@@ -88,16 +255,72 @@ const Table: NextPage<Props<Regions>> = ({ data }:Props<Regions>) => {
                     </div>
                     <LeftSide>
                         <Input isSearch placeholder="Buscar" />
-                        <Button backGround='normal' >Novo cliente</Button>
+                        <Button backGround='normal' >Nova { title }</Button>
                     </LeftSide>
                 </Top>
                 <div>
-                    <Switch />
+                    <TableContainer>
+                        <thead>
+                            <tr>
+                                <th/>
+                                {
+                                    collumn?.map((col, index) => <th key={index}>{col?.replace(/([A-Z])/g, ' $1')}</th>)
+                                }
+                                <th/>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                sData[pag]?.map(( { idRegion, nameRegion, state } ,index) => {
+                                    return (
+                                        <tr key={index} attr-border={index+1===sData[pag]?.length ? "none" : null} >
+                                            <td><Switch shape='circle' /></td>
+                                            <td>{ idRegion }</td>
+                                            <td>{ nameRegion }</td>
+                                            <td><Switch /></td>
+                                            <td>
+                                                <ActionTable>
+                                                    <button>
+                                                        <EditOutlined/>
+                                                    </button>
+                                                    <button>
+                                                        <DeleteOutlined/>
+                                                    </button>
+                                                </ActionTable>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </TableContainer>
                 </div>
             </div>
-            <div>
-                ola mundo
-            </div>
+            <Footer>
+                <div>
+                    <small>Visulaizando { pag+1 } - { sData.length } de { data.length } { title }</small>
+                </div>
+                <div>
+                    <Pag onClick={()=>setPag(prev=>prev-1>-1?prev-1:prev)}>
+                        <LeftOutlined/>
+                    </Pag>
+                    {
+                        sData.map((_, index) => (
+                            <Pag style={
+                                index === pag ? {
+                                    backgroundColor: 'hsl(249deg 100% 66%)',
+                                    color: '#fff'
+                                }
+                             : {}} onClick={() => setPag(index)} key={index}>
+                                <small>{index + 1}</small>
+                            </Pag>
+                        ))
+                    }
+                    <Pag onClick={()=>setPag(prev=>prev+1<sData.length?prev+1:prev)}>
+                        <RightOutlined/>
+                    </Pag>
+                </div>
+            </Footer>
         </Container>
     )
 }

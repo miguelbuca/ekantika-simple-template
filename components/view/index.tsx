@@ -43,6 +43,10 @@ const MainContent = styled.div`
     }
 `
 
+const Main = styled.div`
+  overflow-y: auto !important;
+`
+
 const View: NextPage = ({ children }) => {
   
   const [route, setRoute] = useState<Route>()
@@ -58,7 +62,7 @@ const View: NextPage = ({ children }) => {
           <Header />
           <MainContent>
             <Aside getRoute={route => setRoute(route)} />
-            <div>
+            <Main>
               <div>
                 {route?.icon}
                 <h1>{route?.title}</h1>
@@ -66,7 +70,7 @@ const View: NextPage = ({ children }) => {
               <div>
                 {children}
               </div>
-            </div>
+            </Main>
           </MainContent>
         </Container>
       </div>

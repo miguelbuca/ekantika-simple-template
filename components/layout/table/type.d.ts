@@ -4,6 +4,8 @@ export interface TableItem<T>{
 }
 
 export default interface Props<T>{
+    title?: string
     data: T[],
-    onChange?: (e: TableItem)=> void
+    limit: number,
+    onChange?: (e: TableItem<T>[] | TableItem<T>) => void
 }
