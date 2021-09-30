@@ -190,7 +190,7 @@ const Table: NextPage<Props<Regions>> = ({ data , limit, title, onChange }: Prop
                                     //Object.keys(selectList).includes(`${index}`)
 
                                     return (
-                                        <tr key={index} attr-state={!!marked[index]?.value ? "true" : "false"} attr-border={index+1===sData[pag]?.length ? 'none' : null} >
+                                        <tr key={index} attr-state={!marked[index]?.value ? "true" : "false"} attr-border={index+1===sData[pag]?.length ? 'none' : null} >
                                             <td><Switch onChecked={e => {
                                                 mark({
                                                     index: index * (pag+1),
@@ -201,7 +201,7 @@ const Table: NextPage<Props<Regions>> = ({ data , limit, title, onChange }: Prop
                                             }} shape='circle' /></td>
                                             <td>{ idRegion }</td>
                                             <td>{ nameRegion }</td>
-                                            <td><Switch onChecked={e => {
+                                            <td><Switch defaultChecked={true} onChecked={e => {
                                                 mark({
                                                     index,
                                                     type: 'state',

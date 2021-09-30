@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import { useState, useEffect, memo } from 'react'
 
+import Router from 'next/router'
+
 import {
     HomeOutlined,
     MessageOutlined,
@@ -89,13 +91,13 @@ const Aside: NextPage<Porps> = ({ getRoute }:Porps) => {
 
     const menu: Route[] = [
         {
-            title: 'Home',
+            title: 'Gestão de regiões',
             path: '/',
             icon: <HomeOutlined />
         },
         {
-            title: 'Gestão de regiões',
-            path: '/regions',
+            title: 'Habitações',
+            path: '/habi',
             icon: <ShopOutlined/>
         },
         {
@@ -122,7 +124,19 @@ const Aside: NextPage<Porps> = ({ getRoute }:Porps) => {
             ...menu[0],
             index: 0
         })
+        
     }, [])
+
+    useEffect(() => {
+        Router.events.on('routeChangeComplete', (url) => {
+            menu.map((item, index) => {
+                if (item?.path === url) {
+                    setActive(index)
+                    getRoute(item)
+                }
+            })
+        })
+    }, [Router])
 
     return (
         <Container>

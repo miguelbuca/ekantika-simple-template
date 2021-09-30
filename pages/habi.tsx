@@ -100,6 +100,8 @@ const Clients: NextPage = () => {
         setRegions(tmpData)
       })
     
+      
+    
   }, [])
 
   return (
