@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 
 import {
     HomeOutlined,
     MessageOutlined,
     ShopOutlined,
     UserOutlined,
-    HeatMapOutlined,
     UsergroupAddOutlined,
 } from '@ant-design/icons';
 
@@ -160,4 +159,4 @@ const Aside: NextPage<Porps> = ({ getRoute }:Porps) => {
         </Container>
     )
 }
-export default Aside
+export default memo(Aside)

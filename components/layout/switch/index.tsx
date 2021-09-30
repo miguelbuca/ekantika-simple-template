@@ -1,13 +1,51 @@
 import type { NextPage } from 'next'
 import Props from './type'
 
-import { useState, useRef } from 'react'
+import { useState, useRef , useEffect } from 'react'
 
 import {
     CheckOutlined
 } from '@ant-design/icons';
 
 import styled from 'styled-components'
+
+
+const Switch: NextPage<Props> = ({ onChecked, shape, ...props }: Props) => {
+
+    const [checked, setChecked] = useState<boolean>(false)
+    const ref = useRef<any>()
+
+    useEffect(() => {
+        onChecked(checked)
+    }, [checked])
+
+    return shape !== 'circle' ? (
+        <Container>
+            <input ref={ref} type='checkbox' {...props} hidden />
+            <Check
+                onClick={() => {
+                    ref.current?.click()
+                    setChecked(!checked)
+                }}
+            >
+            </Check>
+        </Container>
+    ) : (
+            <Circle
+                onClick={() => {
+                    ref.current?.click()
+                    setChecked(!checked)
+                }}
+            >
+                <input ref={ref} type="checkbox" {...props} hidden />
+                <CheckIcon>
+                    <CheckOutlined/>
+                </CheckIcon>
+            </Circle>
+    )
+}
+export default Switch
+
 
 const Container = styled.div`
     &>input[type='checkbox']:checked ~ div{
@@ -78,36 +116,3 @@ const CheckIcon = styled.div`
         font-size: 8pt !important;
     }
 `
-
-
-const Switch: NextPage<Props> = ({ onChecked, shape, ...props }: Props) => {
-
-    const [checked, setChecked] = useState<boolean>(false)
-    const ref = useRef<any>()
-
-    return shape !== 'circle' ? (
-        <Container>
-            <input ref={ref} type="checkbox" {...props} hidden />
-            <Check
-                onClick={() => {
-                    ref.current?.click()
-                    setChecked(!checked)
-                }}
-            >
-            </Check>
-        </Container>
-    ) : (
-            <Circle
-                onClick={() => {
-                    ref.current?.click()
-                    setChecked(!checked)
-                }}
-            >
-                <input ref={ref} type="checkbox" {...props} hidden />
-                <CheckIcon>
-                    <CheckOutlined/>
-                </CheckIcon>
-            </Circle>
-    )
-}
-export default Switch

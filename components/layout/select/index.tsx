@@ -11,6 +11,45 @@ import {
     CloseOutlined
 } from '@ant-design/icons';
 
+const Select: NextPage<Props> = ({ type, placeholder ,onSelectItem,data, picture, ...props }: Props) => {
+    
+    const [display, setDisplay] = useState<boolean>(false)
+    const [select, setSelect] = useState<Item>()
+
+    return (
+        <Container>
+            <SelectArea
+                onClick={() => setDisplay(!display)}
+                {...props}
+            >
+                
+                    <Avatar>
+                    {picture && (<Image src={picture} width='30' height='30' />)}
+                        <Label>
+                        <small>{  select && type === 'multiple' ? select?.label : placeholder }</small>
+                            {display ? <CloseOutlined/> : <CaretDownOutlined />}
+                        </Label>
+                    </Avatar>
+            </SelectArea>
+            <List
+                onMouseLeave={() => setDisplay(false)} 
+                style={{
+                display: display ? 'flex' : 'none'
+            }}>
+                {
+                    data?.map((item, index) => <li onClick={() => {
+                        onSelectItem(item)
+                        setSelect(item)
+                        setDisplay(false)
+                    }} key={index} >{ item?.label }</li>)
+                }
+            </List>
+        </Container>
+    )
+}
+export default Select
+
+
 const SelectArea = styled.div`
     background-color: rgba(255,255,255,0.1);
     min-width: 10rem;
@@ -96,41 +135,3 @@ const List = styled.ul`
         }
     }
 `
-
-const Select: NextPage<Props> = ({ type, placeholder ,onSelectItem,data, picture, ...props }: Props) => {
-    
-    const [display, setDisplay] = useState<boolean>(false)
-    const [select, setSelect] = useState<Item>()
-
-    return (
-        <Container>
-            <SelectArea
-                onClick={() => setDisplay(!display)}
-                {...props}
-            >
-                
-                    <Avatar>
-                    {picture && (<Image src={picture} width="30" height="30" />)}
-                        <Label>
-                        <small>{  select && type === 'multiple' ? select?.label : placeholder }</small>
-                            {display ? <CloseOutlined/> : <CaretDownOutlined />}
-                        </Label>
-                    </Avatar>
-            </SelectArea>
-            <List
-                onMouseLeave={() => setDisplay(false)} 
-                style={{
-                display: display ? "flex" : "none"
-            }}>
-                {
-                    data?.map((item, index) => <li onClick={() => {
-                        onSelectItem(item)
-                        setSelect(item)
-                        setDisplay(false)
-                    }} key={index} >{ item?.label }</li>)
-                }
-            </List>
-        </Container>
-    )
-}
-export default Select

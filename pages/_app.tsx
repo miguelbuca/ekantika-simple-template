@@ -38,6 +38,26 @@ const GlobalStyle = createGlobalStyle`
     * {
       box-sizing: border-box;
     }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 0.5px;
+    }
+
+    ::-webkit-scrollbar-button:start:decrement,
+    ::-webkit-scrollbar-button:end:increment {
+      display: none;
+    }
+
+    ::-webkit-scrollbar-track-piece {
+      -webkit-border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:vertical {
+      background-color: ${theme.colors.darTansparent};
+      -webkit-border-radius: 100px;
+      margin: 0 0.2rem;
+    }
 `
 
 function App({ Component, pageProps }: AppProps) {

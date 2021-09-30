@@ -3,6 +3,27 @@ import Props from './type'
 
 import styled from 'styled-components'
 
+const Button: NextPage<Props> = ({ backGround, children ,...args}:Props) => {
+    return (
+        <Container>
+            {
+                backGround === 'normal' ? (
+                    <Normal {...args} >
+                        {children}
+                    </Normal>
+                ) : (
+                    <Transparent {...args}>
+                        {children}
+                    </Transparent>
+                )
+            }
+        </Container>
+    )
+}
+export default Button
+
+
+
 const Container = styled.div`
     height: 60px;
     display: flex;
@@ -40,22 +61,3 @@ const Transparent = styled.button`
     color: ${({ theme }) => theme?.colors?.primary};
     border: solid 1px ${({ theme }) => theme?.colors?.primary} !important;
 `
-
-const Button: NextPage<Props> = ({ backGround, children ,...args}:Props) => {
-    return (
-        <Container>
-            {
-                backGround === 'normal' ? (
-                    <Normal {...args} >
-                        {children}
-                    </Normal>
-                ) : (
-                    <Transparent {...args}>
-                        {children}
-                    </Transparent>
-                )
-            }
-        </Container>
-    )
-}
-export default Button

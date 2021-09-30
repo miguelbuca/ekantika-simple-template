@@ -8,6 +8,17 @@ import {
     SearchOutlined
 } from '@ant-design/icons';
 
+const Input: NextPage<Props> = ({ isSearch , ...args }: Props) => {
+    return (
+        <Container>
+            {isSearch && <SearchOutlined/>}
+            <input {...args} />
+        </Container>
+    )
+}
+export default Input
+
+
 
 
 const Container = styled.div`
@@ -34,14 +45,3 @@ const Container = styled.div`
         padding: .6rem 2.5rem !important;
     }
 `
-
-
-const Input: NextPage<Props> = ({ isSearch , ...args }: Props) => {
-    return (
-        <Container>
-            {isSearch && <SearchOutlined/>}
-            <input {...args} />
-        </Container>
-    )
-}
-export default Input
