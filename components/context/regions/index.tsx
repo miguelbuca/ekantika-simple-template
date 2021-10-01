@@ -16,27 +16,20 @@ export const RegionsProvider = ({ children }: any) => {
   useEffect(() => {
 
     const tmpData: Regions[] = [
-      {
-        idRegion: 1,
-        nameRegion: '1'
-      },
-      {
-        idRegion: 3,
-        nameRegion: '18'
-      },
-      {
-        idRegion: 4,
-        nameRegion: '19'
-      }
-    ]
-
+      { 'idRegion': 1, 'nameRegion': 'BRF HQ' },
+      { 'idRegion': 2, 'nameRegion': 'BRF HQ - In Natura' },
+      { 'idRegion': 3, 'nameRegion': 'BRF HQ - Processados' },
+      { 'idRegion': 5, 'nameRegion': 'RG Nordeste' },
+      { 'idRegion': 7, 'nameRegion': 'RG São Paulo Capital' },
+      { 'idRegion': 8, 'nameRegion': 'RG São Paulo Interior' },
+      { 'idRegion': 9, 'nameRegion': 'RG Sul' },
+      { 'idRegion': 4, 'nameRegion': 'RG Centro Norte' },
+      { 'idRegion': 6, 'nameRegion': 'RG Sudeste' }
+    ];
     axios.get('https://hmg-dev-brf-backend.profitmais.com.br/region/list')
       .then(({ data }) => setRegions(data?.regions || []))
-      .catch(error => {
-        console.warn('Upps! ', error)
-
+      .catch(() => {
         console.log('Are use static data 😋')
-
         setRegions(tmpData)
       })
     
@@ -54,7 +47,7 @@ export const RegionsProvider = ({ children }: any) => {
 export const UseRegions = () =>{
     const context = useContext(RegionsContext)
 
-    if(!context) throw new Error("UseRegions munst be used within RegionsProvider.")
+    if(!context) throw new Error('UseRegions munst be used within RegionsProvider.')
 
     const { data } = context
 
