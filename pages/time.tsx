@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-const Equipe: NextPage = () => {
+const Time: NextPage = () => {
 
   return (
     <div>
@@ -9,4 +9,4 @@ const Equipe: NextPage = () => {
   )
 }
 
-export default Equipe
+export default Time

@@ -97,12 +97,12 @@ const Aside: NextPage<Porps> = ({ getRoute }:Porps) => {
         },
         {
             title: 'Habitações',
-            path: '/habi',
+            path: '/dwellings',
             icon: <ShopOutlined/>
         },
         {
             title: 'Equipe',
-            path: '/equipe',
+            path: '/time',
             icon: <UsergroupAddOutlined/>
         },
         {

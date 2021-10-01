@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 
-const Users: NextPage = () => {
+const Message: NextPage = () => {
 
   return (
     <div>
@@ -9,4 +9,4 @@ const Users: NextPage = () => {
   )
 }
 
-export default Users
+export default Message

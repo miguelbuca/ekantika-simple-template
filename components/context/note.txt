@@ -1,0 +1,1 @@
+Similar, context implementation with typescript

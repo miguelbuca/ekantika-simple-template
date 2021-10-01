@@ -92,8 +92,6 @@ const Table: NextPage<Props<Regions>> = ({ data , limit, title, onChange }: Prop
             if (item && item?.value) dataClean[item?.index] = item?.data
             return null
         })
-
-        console.log('clean', dataClean)
         
         setSelectList(dataClean)
 
@@ -171,70 +169,74 @@ const Table: NextPage<Props<Regions>> = ({ data , limit, title, onChange }: Prop
                     </LeftSide>
                 </Top>
                 <div>
-                    <TableContainer>
-                        <thead>
-                            <tr>
-                                <th/>
-                                {
-                                    collumn?.map((col, index) => <th key={index}>{col?.replace(/([A-Z])/g, ' $1')}</th>)
-                                }
-                                <th/>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                sData[pag]?.map((item, index) => {
+                    {
+                        data?.length > 0 && (
+                            <TableContainer>
+                                <thead>
+                                    <tr>
+                                        <th />
+                                        {
+                                            collumn?.map((col, index) => <th key={index}>{col?.replace(/([A-Z])/g, ' $1')}</th>)
+                                        }
+                                        <th />
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        sData[pag]?.map((item, index) => {
                                     
-                                    const { idRegion, nameRegion, state } = item
+                                            const { idRegion, nameRegion, state } = item
 
-                                    //Object.keys(selectList).includes(`${index}`)
+                                            //Object.keys(selectList).includes(`${index}`)
 
-                                    return (
-                                        <tr key={index} attr-state={!marked[index]?.value ? "true" : "false"} attr-border={index+1===sData[pag]?.length ? 'none' : null} >
-                                            <td><Switch onChecked={e => {
-                                                mark({
-                                                    index: index * (pag+1),
-                                                    type: 'select',
-                                                    value: item,
-                                                    state: e
-                                                })
-                                            }} shape='circle' /></td>
-                                            <td>{ idRegion }</td>
-                                            <td>{ nameRegion }</td>
-                                            <td><Switch defaultChecked={true} onChecked={e => {
-                                                mark({
-                                                    index,
-                                                    type: 'state',
-                                                    value: item,
-                                                    state: e
-                                                })
-                                            }} /></td>
-                                            <td>
-                                                <ActionTable>
-                                                    <button onClick={() => {
-                                                        onChange({
-                                                            action: 'edit',
-                                                            item 
+                                            return (
+                                                <tr key={index} attr-state={!marked[index]?.value ? "true" : "false"} attr-border={index + 1 === sData[pag]?.length ? 'none' : null} >
+                                                    <td><Switch onChecked={e => {
+                                                        mark({
+                                                            index: index * (pag + 1),
+                                                            type: 'select',
+                                                            value: item,
+                                                            state: e
                                                         })
-                                                    }}>
-                                                        <EditOutlined/>
-                                                    </button>
-                                                    <button onClick={() => {
-                                                        onChange({
-                                                            action: 'delete',
-                                                            item 
+                                                    }} shape='circle' /></td>
+                                                    <td>{idRegion}</td>
+                                                    <td>{nameRegion}</td>
+                                                    <td><Switch defaultChecked={true} onChecked={e => {
+                                                        mark({
+                                                            index,
+                                                            type: 'state',
+                                                            value: item,
+                                                            state: e
                                                         })
-                                                    }}>
-                                                        <DeleteOutlined/>
-                                                    </button>
-                                                </ActionTable>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </TableContainer>
+                                                    }} /></td>
+                                                    <td>
+                                                        <ActionTable>
+                                                            <button onClick={() => {
+                                                                onChange({
+                                                                    action: 'edit',
+                                                                    item
+                                                                })
+                                                            }}>
+                                                                <EditOutlined />
+                                                            </button>
+                                                            <button onClick={() => {
+                                                                onChange({
+                                                                    action: 'delete',
+                                                                    item
+                                                                })
+                                                            }}>
+                                                                <DeleteOutlined />
+                                                            </button>
+                                                        </ActionTable>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </TableContainer>
+                        )
+                    }
                 </div>
             </div>
             <Footer>
