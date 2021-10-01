@@ -7,10 +7,15 @@ const Container = styled.div`
 `
 import { RegionsProvider, UseRegions } from '../components/context/regions'
 
+/**
+ * I did this simply to use the context.
+ * @returns context
+ */
+
 const TableView: NextPage = () => {
 
   const { data } = UseRegions()
-  
+
   return (
     <Table
       title='região'
