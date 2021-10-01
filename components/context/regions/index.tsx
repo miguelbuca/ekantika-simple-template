@@ -34,6 +34,9 @@ export const RegionsProvider = ({ children }: any) => {
       .then(({ data }) => setRegions(data?.regions || []))
       .catch(error => {
         console.warn('Upps! ', error)
+
+        console.log('Are use static data 😋')
+
         setRegions(tmpData)
       })
     
